@@ -27,6 +27,8 @@ fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 ```nginx
 events {
     worker_connections 4096;
+    multi_accept on;
+    use epoll;
 }
 
 http {
