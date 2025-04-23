@@ -25,47 +25,54 @@ fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 ### Performance and Security Settings
 
 ```nginx
-# Basic Settings
-sendfile on;
-tcp_nopush on;
-tcp_nodelay on;
-types_hash_max_size 2048;
+events {
+    worker_connections 4096;
+}
 
-server_names_hash_bucket_size 128;
+http {
 
-include /etc/nginx/mime.types;
-default_type application/octet-stream;
+    # Basic Settings
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    types_hash_max_size 2048;
 
-# Timeout Settings
-keepalive_timeout 30;
-client_body_timeout 12;
-client_header_timeout 12;
-send_timeout 10;
+    server_names_hash_bucket_size 128;
 
-# Buffer & Body Limits
-client_body_buffer_size 32K;
-client_header_buffer_size 1k;
-large_client_header_buffers 4 8k;
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
 
-# File Descriptor & Static File Cache
-open_file_cache max=10000 inactive=30s;
-open_file_cache_valid 60s;
-open_file_cache_min_uses 2;
-open_file_cache_errors on;
+    # Timeout Settings
+    keepalive_timeout 30;
+    client_body_timeout 12;
+    client_header_timeout 12;
+    send_timeout 10;
 
-# SSL Settings
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
-ssl_prefer_server_ciphers on;
+    # Buffer & Body Limits
+    client_body_buffer_size 32K;
+    client_header_buffer_size 1k;
+    large_client_header_buffers 4 8k;
 
-# Logging
-access_log /var/log/nginx/access.log;
+    # File Descriptor & Static File Cache
+    open_file_cache max=10000 inactive=30s;
+    open_file_cache_valid 60s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors on;
 
-# Gzip
-gzip on;
+    # SSL Settings
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
 
-# Virtual Hosts
-include /etc/nginx/conf.d/*.conf;
-include /etc/nginx/sites-enabled/*;
+    # Logging
+    access_log /var/log/nginx/access.log;
+
+    # Gzip
+    gzip on;
+
+    # Virtual Hosts
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
 ```
 
 ## 3. Update Site-Specific NGINX Config
