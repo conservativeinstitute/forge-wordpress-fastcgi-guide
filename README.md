@@ -135,7 +135,7 @@ pm.min_spare_servers = 2
 pm.max_spare_servers = 6
 ```
 
-## 5. Permissions and Group Access
+## 5. Permissions and Group Access (Optional, if not working)
 
 Ensure correct permissions:
 
